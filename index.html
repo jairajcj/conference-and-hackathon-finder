@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexEvent | Premier Conference & Hackathon Finder</title>
+    <meta name="description" content="Discover top-tier conferences and hackathons in India and virtually. Filter by indexing (IEEE, Scopus), price, and dates.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Ionicons for Icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="logo">
+                <span class="logo-icon"><ion-icon name="planet"></ion-icon></span>
+                Nex<span class="highlight">Event</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">Discover</a>
+                <a href="#">Calendar</a>
+                <a href="#">Saved</a>
+                <a href="#">Submit Event</a>
+            </div>
+            <div class="user-actions">
+                <button class="btn btn-secondary">Sign In</button>
+            </div>
+        </nav>
+
+        <!-- Main Layout -->
+        <main class="main-content">
+            <!-- Sidebar Filters -->
+            <aside class="sidebar">
+                <div class="filter-group">
+                    <h3><ion-icon name="search-outline"></ion-icon> Search</h3>
+                    <div class="input-wrapper">
+                        <input type="text" id="searchInput" placeholder="Find events...">
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h3><ion-icon name="location-outline"></ion-icon> Location</h3>
+                    <label class="checkbox-container">
+                        <input type="checkbox" value="India" class="filter-location" checked>
+                        <span class="checkmark"></span>
+                        India (Physical)
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" value="Virtual" class="filter-location" checked>
+                        <span class="checkmark"></span>
+                        Virtual / Online
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <h3><ion-icon name="layers-outline"></ion-icon> Event Type</h3>
+                    <label class="radio-container">
+                        <input type="radio" name="eventType" value="all" checked>
+                        <span class="radio-mark"></span>
+                        All Events
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="eventType" value="hackathon">
+                        <span class="radio-mark"></span>
+                        Hackathons
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="eventType" value="conference">
+                        <span class="radio-mark"></span>
+                        Conferences
+                    </label>
+                </div>
+
+                <div class="filter-group" id="indexingFilterCtn">
+                    <h3><ion-icon name="library-outline"></ion-icon> Indexing</h3>
+                    <label class="checkbox-container">
+                        <input type="checkbox" value="IEEE" class="filter-indexing">
+                        <span class="checkmark"></span>
+                        IEEE
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" value="Scopus" class="filter-indexing">
+                        <span class="checkmark"></span>
+                        Scopus
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" value="WoS" class="filter-indexing">
+                        <span class="checkmark"></span>
+                        Web of Science (WoS)
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" value="Springer" class="filter-indexing">
+                        <span class="checkmark"></span>
+                        Springer
+                    </label>
+                </div>
+            </aside>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <header class="page-header">
+                    <div>
+                        <h1>Explore <span class="gradient-text">Future Opportunities</span></h1>
+                        <p class="subtitle">Curated list of premium hackathons and conferences.</p>
+                    </div>
+                    <div class="sort-options">
+                        <span>Sort by:</span>
+                        <select id="sortSelect">
+                            <option value="date-asc">Date (Soonest)</option>
+                            <option value="price-asc">Price (Low to High)</option>
+                            <option value="price-desc">Price (High to Low)</option>
+                        </select>
+                    </div>
+                </header>
+
+                <div id="eventsGrid" class="events-grid">
+                    <!-- Events will be injected here by JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Details Modal -->
+    <div class="modal-backdrop" id="eventModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModalBtn"><ion-icon name="close-outline"></ion-icon></button>
+            <div class="modal-header">
+                <div class="tag-row" id="modalTags">
+                    <!-- Tags -->
+                </div>
+                <h2 id="modalTitle">Event Title</h2>
+                <p class="modal-subtitle" id="modalLocation">Location</p>
+            </div>
+            <div class="modal-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">Date</span>
+                        <span class="value" id="modalDate">Jan 20, 2025</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Submission Deadline</span>
+                        <span class="value warning" id="modalDeadline">Jan 10, 2025</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Registration / APC</span>
+                        <span class="value" id="modalPrice">₹5000</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Indexing</span>
+                        <span class="value" id="modalIndexing">-</span>
+                    </div>
+                </div>
+                <div class="description-box">
+                    <h3>Description</h3>
+                    <p id="modalDescription">...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary">Save</button>
+                <a href="#" target="_blank" class="btn btn-primary" id="modalLinkBtn">Visit Official Site</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
