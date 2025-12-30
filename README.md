@@ -1,4 +1,3 @@
-# NexEvent - Conference & Hackathon Finder
 
 A premium web application to discover Conferences and Hackathons in India and Virtual spaces.
 
